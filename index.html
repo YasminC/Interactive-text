@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Text test</title>
+	<script src="js/jquery-1.10.2.min.js"></script>
+
+	<style>
+
+	body{
+		padding: 5% 20%;
+	}
+	.p1{
+		color:#009933;
+		font-weight:bold;
+		opacity: 1.0;
+ 		transition: opacity 0.3s ease-out;
+ 		-moz-transition: opacity 0.3s ease-out;
+ 		-webkit-transition: opacity 0.3s ease-out;
+	}
+	.p1:hover {
+		opacity: 0;
+ 		transition: opacity 0.3s ease-out;
+ 		-moz-transition: opacity 0.3s ease-out;
+ 		-webkit-transition: opacity 0.3s ease-out;
+	}
+
+	.letter1, .letter2, .letter3, .letter4{
+		color:#6B246B;
+		font-weight:bold;
+	}
+
+	.sentence, .replace, .mouse{
+		color:#000066;
+		font-weight:bold;
+	}
+
+	.procras{
+		color:#CC0000;
+		font-weight:bold;
+	}
+
+	img{
+		width:100%;
+		height:100%;
+		position:absolute;
+		top:0;
+		left:0;
+		display:none;
+	}
+
+	p{
+		font-size:1.2em;
+	}
+	h1{
+		font-size:2em;
+	}
+
+	p, h1{
+		text-align:center;
+	}
+
+	#text p{
+		padding:3% 0;
+	}
+
+
+	</style>
+</head>
+<body>
+	<!--audio-->
+  	<audio id="page_audio">
+  		<source src="dub.mp3" type="audio/mpeg">
+  		<embed height="50" width="100" src="dub.mp3">
+	</audio>
+	<img class="cat" src="cat.png">
+	<h1>Mucking about with interactive text...</h1> 
+	<br/>
+	<p>This sentence <span class="p1">will</span> have parts <span class="p1">that</span> will slowly <span class="p1">fade away</span> when the mouse <span class="p1">hovers</span> over and <span class="p1">f</span>ade <span class="p1">back</span> in when <span class="p1">not.</span> These parts will all <span class="p1">dissappear</span> completely on <span class="p1">click</span> when clicking <span class="p1">anywhere</span> on the page.</p>
+	<br/>
+	<p>This sentence should have parts that fade out when holding down <span class="letter1">'w'</span> <span class="letter2">'a'</span> and <span class="letter3">'d'</span> on the keyboard and dissapear when pressing <span class="letter4">'s'</span>.</p>
+	<br/>
+	<p>This <span class="sentence">sentence</span> will have words <span class="replace">replaced</span> when the <span class="mouse">mouse</span> hovers over certain ones.</p>
+	<br/>
+	<div id="text">
+		<p>When pressing any key on the keyboard the corresponding letters should dissapear within this paragraph and the filler text below. This includes capital letters and symbols.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec dui commodo, eleifend sem at, scelerisque nibh. In porta orci nisi, id cursus nisl malesuada et. Sed quis sapien nec mauris imperdiet fermentum. Donec a ultrices sem. Nulla sit amet rhoncus nunc, eget fringilla diam. Sed quis metus dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer vitae dolor in turpis fermentum gravida lacinia ut eros.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec dui commodo, eleifend sem at, scelerisque nibh. In porta orci nisi, id cursus nisl malesuada et. Aliquam vitae placerat felis. Sed ut tincidunt massa, ac blandit lorem. Ut diam est, mollis at nulla non, mollis gravida mi. Cras a magna dolor.</p>
+	</div>
+	<br/>
+
+	<h1 class="procras">HOLD ENTER TO PROCRASTINATE!</H1>
+<script type="text/javascript">
+$(document).ready(function() {
+//first paragraph
+	
+    $("body").click(function() {
+        $(".p1").fadeOut();
+    });
+
+//second paragraph
+//w
+$(document).keydown(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == 87){
+    	$(".letter1").fadeOut('slow');
+        console.log('w hide');   
+    } else 
+//a
+    	if(keycode == 65){
+    	$(".letter2").fadeOut('slow');
+        console.log('a hide ');   
+    } else 
+//d
+    	if(keycode == 68){
+    	$(".letter3").fadeOut('slow');
+        console.log('d hide');   
+    } else 
+//s
+    	if(keycode == 83){
+    	$(".letter4").fadeOut('slow');
+    	$(".letter3").fadeOut('slow');
+    	$(".letter2").fadeOut('slow');
+    	$(".letter1").fadeOut('slow');
+        console.log('hide all');   
+    } else 
+//cat
+    	if(keycode == 13){
+    		$(".cat").fadeIn('slow');
+    		document.getElementById('page_audio').play();
+			console.log('procrastinate!');   
+    }
+});
+
+$(document).keyup(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == 87){
+    	$(".letter1").fadeIn('slow');
+        console.log('w show');   
+    } else 
+//a
+    	if(keycode == 65){
+    	$(".letter2").fadeIn('slow');
+        console.log('a show');   
+    } else 
+//d
+    	if(keycode == 68){
+    	$(".letter3").fadeIn('slow');
+        console.log('d show');   
+    } else 
+//cat
+    	if(keycode == 13){
+    		$(".cat").fadeOut('slow');
+    		document.getElementById('page_audio').pause();
+			console.log('procrastinate!');   
+    }
+});
+
+
+
+//third paragraph
+	$( ".sentence" ).hover(function(){
+		$('.sentence').fadeTo(600, 0, function(){
+		    $(this).delay(500);
+		    $(this).html('elephant');
+		    $(this).fadeTo(600, 1);
+		});
+	});
+
+	$( ".replace" ).hover(function(){
+		$('.replace').fadeTo(600, 0, function(){
+		    $(this).delay(500);
+		    $(this).html('swagalistic');
+		    $(this).fadeTo(600, 1);
+		});
+	});
+
+	$( ".mouse" ).hover(function(){
+		$('.mouse').fadeTo(600, 0, function(){
+		    $(this).delay(500);
+		    $(this).html('chikorita');
+		    $(this).fadeTo(600, 1);
+		});
+	});
+
+//replace letters with blank character on keyboard press
+$(document).keypress(function(event){
+	find("#text")
+	
+
+    var text = $("#text p").html();
+    var characterToDelete = String.fromCharCode(event.which);
+    amount = text.indexOf(characterToDelete);
+    if(amount !== -1)
+    {
+        for (i = 0; i < amount; i++) 
+        { 
+            text = text.replace(characterToDelete, '');
+            $("#text p").html(text);
+        }
+    }
+});
+
+});
+</script>
+
+</body>
+</html>
